@@ -1,98 +1,90 @@
-//Question 1 -Event Handling
-// Button Click
+//  Event Handling QUESTION
 document.getElementById('mainBtn').addEventListener('click', () => {
-    alert('Button clicked!');
+  alert('Button clicked!');
 });
 
-// Hover Effects
 const hoverText = document.getElementById('hoverText');
 hoverText.addEventListener('mouseenter', () => {
-    hoverText.style.color = 'blue';
+  hoverText.style.color = 'green';
 });
 hoverText.addEventListener('mouseleave', () => {
-    hoverText.style.color = '';
+  hoverText.style.color = '';
 });
 
-// Keypress Detection
 document.getElementById('keyInput').addEventListener('keypress', (e) => {
-    console.log(`Key pressed: ${e.key}`);
+  console.log(`Key pressed: ${e.key}`);
 });
 
-// Bonus: Double-click or Long Press
 let timer;
 const secret = document.getElementById('secretAction');
-
 secret.addEventListener('dblclick', () => {
-    alert('🎉 Secret double-click activated!');
+  alert('🎉 Secret double-click activated!');
 });
-
 secret.addEventListener('mousedown', () => {
-    timer = setTimeout(() => {
-        alert('⏳ Long press activated!');
-    }, 1000); // 1 second hold
+  timer = setTimeout(() => {
+    alert('⏳ Long press activated!');
+  }, 1000);
 });
 secret.addEventListener('mouseup', () => clearTimeout(timer));
 
-//Question 2- Interactive elements
-// Change Button Color
+//  Interactive Elements QUESTION
 document.getElementById('colorChanger').addEventListener('click', (e) => {
-    e.target.style.backgroundColor = e.target.style.backgroundColor === 'orange' ? 'green' : 'orange';
+  e.target.style.backgroundColor = e.target.style.backgroundColor === 'orange' ? 'green' : 'orange';
 });
 
-// Image Slideshow
-const images = ['img1.jpg', 'img2.jpg', 'img3.jpg'];
+const images = [
+  'https://via.placeholder.com/200x120?text=Image+1',
+  'https://via.placeholder.com/200x120?text=Image+2',
+  'https://via.placeholder.com/200x120?text=Image+3'
+];
 let currentImg = 0;
-
 document.getElementById('nextImg').addEventListener('click', () => {
-    currentImg = (currentImg + 1) % images.length;
-    document.getElementById('gallery').src = images[currentImg];
+  currentImg = (currentImg + 1) % images.length;
+  document.getElementById('gallery').src = images[currentImg];
 });
 
-// Tabs
-document.querySelectorAll('.tabBtn').forEach(button => {
-    button.addEventListener('click', () => {
-        document.querySelectorAll('.tabContent').forEach(tab => tab.style.display = 'none');
-        document.getElementById(button.dataset.tab).style.display = 'block';
-    });
+document.querySelectorAll('.tabBtn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tabContent').forEach(tab => tab.classList.remove('active'));
+    document.getElementById(btn.dataset.tab).classList.add('active');
+  });
 });
 
-//Question 3- Form Validation
+// 📋 Form Validation QUESTION
 const form = document.getElementById('signupForm');
 const email = document.getElementById('email');
 const password = document.getElementById('password');
 const feedback = document.getElementById('feedback');
 
-form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    let errors = [];
+function validateEmail(emailValue) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailValue);
+}
 
-    if (!email.value.includes('@')) {
-        errors.push('Invalid email format.');
-    }
+function validatePassword(passwordValue) {
+  return passwordValue.length >= 8;
+}
 
-    if (password.value.length < 8) {
-        errors.push('Password must be at least 8 characters.');
-    }
-
-    feedback.textContent = errors.length ? errors.join(' ') : '✅ Form submitted successfully!';
-    feedback.style.color = errors.length ? 'red' : 'green';
-});
-
-// Real-time Feedback
 email.addEventListener('input', () => {
-    if (!email.value.includes('@')) {
-        feedback.textContent = '❌ Email should include @';
-    } else {
-        feedback.textContent = '';
-    }
+  feedback.textContent = validateEmail(email.value) ? '' : 'Invalid email format';
+  feedback.style.color = 'red';
 });
 
 password.addEventListener('input', () => {
-    if (password.value.length < 8) {
-        feedback.textContent = '❌ Password must be at least 8 characters';
-    } else {
-        feedback.textContent = '';
-    }
+  feedback.textContent = validatePassword(password.value) ? '' : 'Password too short';
+  feedback.style.color = 'red';
 });
 
-//Question 4 -
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const emailValid = validateEmail(email.value);
+  const passwordValid = validatePassword(password.value);
+
+  if (emailValid && passwordValid) {
+    feedback.textContent = 'Form submitted successfully!';
+    feedback.style.color = 'green';
+  } else {
+    feedback.textContent = 'Please fix errors before submitting.';
+    feedback.style.color = 'red';
+  }
+});
+
