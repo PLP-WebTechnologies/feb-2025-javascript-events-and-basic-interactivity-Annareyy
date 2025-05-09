@@ -1,49 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Assignment week 6</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
-
-    #colorChanger {
-      transition: background-color 0.5s ease;
-    }
-
-    .tabContent {
-      display: none;
-      margin-top: 10px;
-      transition: opacity 0.5s ease;
-    }
-
-    .tabContent.active {
-      display: block;
-      opacity: 1;
-    }
-
-    .tabs button {
-      margin-right: 10px;
-    }
-
-    #feedback {
-      margin-top: 10px;
-      font-weight: bold;
-    }
-
-    img {
-      margin-top: 10px;
-    }
-
-    #secretAction {
-      margin-top: 20px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-  </style>
+  <meta charset="UTF-8">
+  <title>All-in-One Interaction Demo</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
@@ -54,117 +14,25 @@
   <p id="secretAction">Double-click or long-press this text 🤫</p>
 
   <h2>🎮 Interactive Elements</h2>
-  <button id="colorChanger">Change Color</button>
-  <br><br>
+  <button id="colorChanger">Change Color</button><br><br>
   <img id="gallery" src="https://via.placeholder.com/200x120?text=Image+1" width="200">
-  <button id="nextImg">Next</button>
+  <button id="nextImg">Next</button><br><br>
 
-  <div class="tabs">
-    <button class="tabBtn" data-tab="tab1">Tab 1</button>
-    <button class="tabBtn" data-tab="tab2">Tab 2</button>
-  </div>
-  <div class="tabContent active" id="tab1">This is Tab 1 content</div>
-  <div class="tabContent" id="tab2">This is Tab 2 content</div>
+  <button class="tabBtn" data-tab="tab1">Tab 1</button>
+  <button class="tabBtn" data-tab="tab2">Tab 2</button>
+  <div class="tabContent active" id="tab1">This is Tab 1</div>
+  <div class="tabContent" id="tab2">This is Tab 2</div>
 
   <h2>📋 Form Validation</h2>
   <form id="signupForm">
-    <input type="email" id="email" placeholder="Email" required><br><br>
-    <input type="password" id="password" placeholder="Password (min 8 chars)" required><br><br>
-    <button type="submit">Sign Up</button>
+    <input type="email" id="email" placeholder="Email" required><br>
+    <input type="password" id="password" placeholder="Password (min 8 chars)" required><br>
+    <button type="submit">Submit</button>
     <p id="feedback"></p>
   </form>
 
-  <script>
-    // --- Event Handling ---
-    document.getElementById('mainBtn').addEventListener('click', () => {
-      alert('Button clicked!');
-    });
-
-    const hoverText = document.getElementById('hoverText');
-    hoverText.addEventListener('mouseenter', () => {
-      hoverText.style.color = 'blue';
-    });
-    hoverText.addEventListener('mouseleave', () => {
-      hoverText.style.color = '';
-    });
-
-    document.getElementById('keyInput').addEventListener('keypress', (e) => {
-      console.log(`Key pressed: ${e.key}`);
-    });
-
-    let timer;
-    const secret = document.getElementById('secretAction');
-    secret.addEventListener('dblclick', () => {
-      alert('🎉 Secret double-click activated!');
-    });
-    secret.addEventListener('mousedown', () => {
-      timer = setTimeout(() => {
-        alert('⏳ Long press activated!');
-      }, 1000);
-    });
-    secret.addEventListener('mouseup', () => clearTimeout(timer));
-
-    // --- Interactive Elements ---
-    document.getElementById('colorChanger').addEventListener('click', (e) => {
-      e.target.style.backgroundColor = e.target.style.backgroundColor === 'orange' ? 'green' : 'orange';
-    });
-
-    const images = [
-      'https://via.placeholder.com/200x120?text=Image+1',
-      'https://via.placeholder.com/200x120?text=Image+2',
-      'https://via.placeholder.com/200x120?text=Image+3'
-    ];
-    let currentImg = 0;
-    document.getElementById('nextImg').addEventListener('click', () => {
-      currentImg = (currentImg + 1) % images.length;
-      document.getElementById('gallery').src = images[currentImg];
-    });
-
-    document.querySelectorAll('.tabBtn').forEach(button => {
-      button.addEventListener('click', () => {
-        document.querySelectorAll('.tabContent').forEach(tab => tab.classList.remove('active'));
-        document.getElementById(button.dataset.tab).classList.add('active');
-      });
-    });
-
-    // --- Form Validation ---
-    const form = document.getElementById('signupForm');
-    const email = document.getElementById('email');
-    const password = document.getElementById('password');
-    const feedback = document.getElementById('feedback');
-
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      let errors = [];
-
-      if (!email.value.includes('@')) {
-        errors.push('Invalid email format.');
-      }
-
-      if (password.value.length < 8) {
-        errors.push('Password must be at least 8 characters.');
-      }
-
-      feedback.textContent = errors.length ? errors.join(' ') : '✅ Form submitted successfully!';
-      feedback.style.color = errors.length ? 'red' : 'green';
-    });
-
-    email.addEventListener('input', () => {
-      if (!email.value.includes('@')) {
-        feedback.textContent = '❌ Email should include @';
-      } else {
-        feedback.textContent = '';
-      }
-    });
-
-    password.addEventListener('input', () => {
-      if (password.value.length < 8) {
-        feedback.textContent = '❌ Password must be at least 8 characters';
-      } else {
-        feedback.textContent = '';
-      }
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
+
 
